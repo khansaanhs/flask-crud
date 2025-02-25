@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-crud-app-service
+spec:
+  type: NodePort
+  ports:
+  - port: 80  # Port externe
+    targetPort: 5000  # Port interne de l'application
+    nodePort: 30001  # Port accessible sur les nœuds Kubernetes
+  selector:
+    app: flask-crud  
+    
