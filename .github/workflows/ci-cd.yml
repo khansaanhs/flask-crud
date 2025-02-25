@@ -46,7 +46,7 @@ jobs:
 
       - name: Configure Kubernetes cluster
         run: |
-          echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig.yaml
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > kubeconfig.yaml
           export KUBECONFIG=kubeconfig.yaml
 
       - name: Deploy to Kubernetes
