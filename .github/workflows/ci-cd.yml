@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - master
+      - master # Déclencher le pipeline lors d'un push sur la branche main
   pull_request:
     branches:
-      - master
+      - master  # Déclencher le pipeline lors d'une pull request sur la branche main
 
 jobs:
   build-and-test:
@@ -37,19 +37,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get GitHub Actions Public IP
-        id: get_ip
-        run: echo "IP=$(curl -s ifconfig.me)" >> $GITHUB_ENV
-
-      - name: Open port 6443 on master node
-        run: |
-          ssh -o StrictHostKeyChecking=no adminuser@74.176.51.1 << EOF
-            sudo ufw allow from $IP to any port 6443 proto tcp
-            sudo ufw reload
-          EOF
-        env:
-          IP: ${{ env.IP }}
-
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
 
@@ -64,13 +51,3 @@ jobs:
           kubectl apply -f k8s/deployment.yaml --validate=false
           kubectl apply -f k8s/service.yaml
           kubectl get pods -o wide
-
-      - name: Close port 6443 on master node
-        if: always()
-        run: |
-          ssh -o StrictHostKeyChecking=no adminuser@74.176.51.1 << EOF
-            sudo ufw delete allow from $IP to any port 6443 proto tcp
-            sudo ufw reload
-          EOF
-        env:
-          IP: ${{ env.IP }}
