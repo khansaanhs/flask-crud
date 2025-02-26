@@ -42,13 +42,13 @@ jobs:
 
       - name: Configure Kubernetes cluster
         run: |
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > kubeconfig.yaml
-          export KUBECONFIG=$(pwd)/kubeconfig.yaml
+          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+          
 
       - name: Deploy to Kubernetes
         run: |
-          export KUBECONFIG=$(pwd)/kubeconfig.yaml
-          kubectl get nodes
+          
+          
           kubectl apply -f k8s/deployment.yaml --validate=false
           kubectl apply -f k8s/service.yaml
           kubectl get pods -o wide
