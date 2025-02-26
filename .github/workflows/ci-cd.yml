@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - master # Déclencher le pipeline lors d'un push sur la branche main
+      - master # Déclencher le pipeline lors d'un push sur la branche master
   pull_request:
     branches:
-      - master  # Déclencher le pipeline lors d'une pull request sur la branche main
+      - master  # Déclencher le pipeline lors d'une pull request sur la branche master
 
 jobs:
   build-and-test:
@@ -40,15 +40,16 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
 
+      - name: Create ~/.kube directory
+        run: mkdir -p ~/.kube
+
       - name: Configure Kubernetes cluster
         run: |
           echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
-          
 
       - name: Deploy to Kubernetes
         run: |
-          
-          
           kubectl apply -f k8s/deployment.yaml --validate=false
           kubectl apply -f k8s/service.yaml
           kubectl get pods -o wide
+
