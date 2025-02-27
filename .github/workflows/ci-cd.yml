@@ -25,10 +25,10 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t khansaa280/flask-crud:latest .
+        run: docker build -t khansaa280/myapp:latest .
 
       - name: Push Docker image
-        run: docker push khansaa280/flask-crud:latest
+        run: docker push khansaa280/myapp:latest
 
   deploy-to-kubernetes:
     runs-on: ubuntu-latest
