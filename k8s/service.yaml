@@ -7,7 +7,7 @@ spec:
   ports:
   - port: 80  # Port externe
     targetPort: 5000  # Port interne de l'application
-    nodePort: 30001  # Port accessible sur les nœuds Kubernetes
+    nodePort: 30002  # Port accessible sur les nœuds Kubernetes
   selector:
     app: myapp 
     
