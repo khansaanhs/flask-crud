@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-crud
+  name: myapp
 spec:
   replicas: 2  # Nombre de réplicas
   selector:
     matchLabels:
-      app: flask-crud
+      app: myapp
   template:
     metadata:
       labels:
-        app: flask-crud
+        app: myapp
     spec:
       containers:
-      - name: flask-crud
-        image: khansaa280/flask-crud:latest  # Image sur Docker Hub
+      - name: myapp
+        image: khansaa280/myapp:latest  # Image sur Docker Hub
         ports:
         - containerPort: 5000
         env:
